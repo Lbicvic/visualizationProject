@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nezaposlenost RH</title>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="http://d3js.org/topojson.v1.min.js"></script>
+
+</head>
+
+<body>
+    <h3>Nezaposlenost u Republici Hrvatskoj u razdoblju od 2004. do 2022. godine</h3>
+    <script src="../data.js"></script>
+    <script>
+        console.log(data)
+        var width = 960;
+        var height = 700;
+
+        var skala = d3.scale.linear()
+            .domain([55000, 660000])
+            .range([0, 6]);
+
+        var colors = ["#0000FF27", "#0000FF4B", "#0000FF6F", "#0000FF93", "#0000FFB7", "#0000FFDB", "#0000FFFF"];
+
+        var projection = d3.geo.mercator()
+            .center([0, 10])
+            .scale(6000)
+            .translate([17600, 4500])
+            .rotate([-180, 0]);
+
+        var path = d3.geo.path()
+            .projection(projection);
+
+        var svg = d3.select("body").append("svg")
+            .attr("width", width)
+            .attr("height", height)
+            .style("background", "white")
+
+        d3.select("body")
+            .append("div")
+            .attr("id", "name");
+
+        d3.select("body")
+            .append("div")
+            .attr("id", "info");
+
+        var zoom = d3.behavior.zoom()
+            .translate(projection.translate())
+            .scale(projection.scale())
+            .scaleExtent([height, 20 * height])
+            .on("zoom", onZoom);
+
+        var g = svg.append("g")
+            .call(zoom);
+
+        d3.json("cro_regv3.json", function (error, cro) {
+            var data = topojson.feature(cro, cro.objects.layer1);
+            var states = g.selectAll("path.county")
+                .data(data.features)
+                .enter()
+                .append("path")
+                .attr("class", "county")
+                .attr("id", function (d) { return d.id; })
+                .attr("d", path)
+                .style("fill", function (d) {
+                    var value = Math.round(skala(d.properties.unemployed));
+                    return colors[value];
+                })
+                .style("stroke", "gray")
+                .style("stroke-width", 1)
+                .style("stroke-opacity", 1)
+                .on("mouseover", function (d) {
+                    console.log(d.properties.population);
+                })
+                .on("click", onClick);
+        });
+
+        function onZoom() {
+            projection.translate(d3.event.translate).scale(d3.event.scale);
+            g.selectAll("path").attr("d", path);
+        }
+
+        function onClick(d) {
+            var a, b, c;
+            var centroid = path.centroid(d);
+            a = centroid[0];
+            b = centroid[1];
+            c = 4;
+            centered = d;
+
+            g.selectAll("path")
+                .classed("active", centered && function (d) { return d === centered; });
+
+            d3.select("#info").html(`Zupanija: ${d.properties.name} <br/> Ukupan Broj Nezaposlenih: ${d.properties.unemployed} <br/>`);
+
+            g.transition()
+                .duration(1000)
+                .attr("transform", `translate(${width / 2}, ${height / 2}) scale(${c}) translate(${-a}, ${-b})`)
+                .style("stroke-width", 1.5 / c + "px");
+
+            a = width / 2;
+            b = height / 2;
+            c = 1;
+            centered = null;
+
+            g.transition()
+                .delay(10000)
+                .duration(1000)
+                .attr("transform", `translate(${width / 2}, ${height / 2}) scale(${c}) translate(${-a}, ${-b})`)
+                .style("stroke-width", 1.5 / c + "px")
+                .each('end', function () {
+                    d3.select("#info")
+                        .html("");
+                }
+                );  }
+
+    </script>
+
+
+</body>
+
+</html>
