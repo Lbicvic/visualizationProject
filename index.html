@@ -20,86 +20,20 @@
             shape-rendering: crispEdges;
         }
     </style>
+    <link rel="stylesheet" href="index.css">
 
 </head>
 
 <body>
-    <h3>Nezaposlenost u Republici Hrvatskoj u razdoblju od 2004. do 2022. godine</h3>
-    <p id="imeZupanije"></p>
+    <div id="map">
+        <h3>Nezaposlenost u Republici Hrvatskoj u razdoblju od 2004. do 2022. godine</h3>
+        <p id="imeZupanije"></p>
+    </div>
     <div id="bar-chart"></div>
-    <script src="../data.js"></script>
+    <script src="data.js"></script>
     <script>
         var width = 960;
         var height = 700;
-        var margin = { top: 40, bottom: 60, left: 60, right: 20 };
-        var widthBarSVG = 650 - margin.left - margin.right;
-        var heightBarSVG = 650 - margin.top - margin.bottom;
-        var barPadding = 4;
-        var barWidth = width / data.length - barPadding;
-        var x = d3.scale.ordinal()
-            .domain(d3.range(data.length))
-            .range([0, widthBarSVG]);
-
-        var barColors = d3.scale.ordinal()
-            .domain(d3.range(data.length))
-            .range(["Brown", "cadetBlue", "BurlyWood", "Cornsilk", "DarkKhaki", "GoldenRod", "Pink", "Turquoise", "PaleGreen", "Black","GoldenRod","GoldenRod","GoldenRod","GoldenRod","GoldenRod","GoldenRod","GoldenRod","GoldenRod","GoldenRod"]);
-       
-        var y = d3.scale.linear()
-            .domain([0, d3.max(data, function (d, i) { return d; })])
-            .range([heightBarSVG, 0]);
-
-        var svgBarChart = d3.select("#bar-chart")
-            .append("svg")
-            .attr("width", widthBarSVG + margin.left + margin.right)
-            .attr("height", heightBarSVG + margin.bottom + margin.top)
-            .style("background-color", "lightblue")
-            .append("g")
-            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-        var xAxis = d3.svg.axis()
-            .scale(x)
-            .orient("bottom")
-            .tickFormat(function(d, i) { return data[i].Godina;});
-
-
-        var yAxis =d3.svg.axis()
-            .scale(y)
-            .orient("left")
-            .ticks(2000);
-
-        svgBarChart.append("g")
-            .attr("class", "x axis")
-            .attr("transform", "translate(0," + heightBarSVG + ")")
-            .call(xAxis)
-            .selectAll("text")
-            .style("text-anchor", "middle");
-
-        svgBarChart.append("g")
-            .attr("class", "y axis")
-            .call(yAxis)
-
-        svgBarChart.append("text")
-            .attr("transform", "rotate(-90)")
-            .attr("x", 0 - (heightBarSVG / 2))
-            .attr("y", 0 - margin.left)
-            .attr("dy", "1em")
-            .style("text-anchor", "middle")
-            .text("Broj Nezaposlenih")
-
-        svgBarChart.append("text")
-            .attr("x", (widthBarSVG / 2))
-            .attr("y", (heightBarSVG + (margin.bottom / 2)))
-            .attr("dy", "1em")
-            .style("text-anchor", "middle")
-            .text("Godina");
-
-        svgBarChart.append("text")
-            .attr("x", (widthBarSVG / 2))
-            .attr("y", (margin.top / 2) - 40)
-            .style("text-anchor", "middle")
-            .style("font-size", "1em")
-            .text("Prikaz broja nezaposlenih po godinama");
-
         var skala = d3.scale.linear()
             .domain([55000, 660000])
             .range([0, 6]);
@@ -115,7 +49,7 @@
         var path = d3.geo.path()
             .projection(projection);
 
-        var svg = d3.select("body").append("svg")
+        var svg = d3.select("#map").append("svg")
             .attr("width", width)
             .attr("height", height)
             .style("background", "white")
@@ -139,24 +73,104 @@
                 .on("mouseover", function (d) {
 
                 })
-                .on("click", function (d,i) {
+                .on("click", function (d, i) {
                     d3.select("#imeZupanije").html(d.properties.name);
-                    d3.select("#bar-chart").html(addBarChart())
-                    })
-                });;
-     
-    
-        function addBarChart(){
-        var barchart = svgBarChart.selectAll("rect")
-            .data(data)
-            .enter()
-            .append("rect")
-            .attr("x", function (d, i) { return x(i); })
-            .attr("y", function (d, i) { return y(d.Godina); })
-            .attr("height", function (d,i) { return height - y(d.Godina); })
-            .attr("width", barWidth)
-            .attr("fill", function (d, i) { return barColors(i); });
+                    addBarChart(d.properties.name)
+                })
+        });;
 
+
+        function addBarChart(imeZupanije) {
+            data.forEach(element => {
+                if (imeZupanije.toUpperCase() == element.Županija) {
+
+                    var margin = { top: 40, bottom: 70, left: 65, right: 20 };
+                    var width = 700 - margin.left - margin.right;
+                    var height = 700 - margin.top - margin.bottom;
+                    var barPadding = 4;
+                    var barWidth = width / element.Godina.length - barPadding;
+
+                    console.log(d3.min(element.BrojNezaposlenih))
+                    console.log(d3.max(element.BrojNezaposlenih))
+
+                    var barColors = d3.scale.linear()
+                        .domain([0,element.Godina.length])
+                        .range(["silver", "black"]);
+
+                    var x = d3.scale.ordinal()
+                        .domain(d3.range(element.Godina.length))
+                        .rangeRoundBands([0, width]);
+
+                    var y = d3.scale.linear()
+                        .domain([0, d3.max(element.BrojNezaposlenih)])
+                        .range([height, 0]);
+
+                    d3.select("#bar-chart svg").remove();
+
+                    var svg = d3.select("#bar-chart")
+                        .append("svg")
+                        .attr("width", width + margin.left + margin.right)
+                        .attr("height", height + margin.bottom + margin.top)
+                        .style("background-color", "white")
+                        .append("g")
+                        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+                    var xAxis = d3.svg.axis()
+                        .scale(x)
+                        .orient("bottom")
+                        .tickFormat(function (d, i) { return element.Godina[i] });
+
+                    var yAxis = d3.svg.axis()
+                        .scale(y)
+                        .orient("left")
+                        .ticks(10);
+
+                    svg.append("g")
+                        .attr("class", "x axis")
+                        .attr("transform", "translate(0," + height + ")")
+                        .call(xAxis)
+                        .selectAll("text")
+                        .style("text-anchor", "middle");
+
+                    svg.append("g")
+                        .attr("class", "y axis")
+                        .call(yAxis)
+
+                    svg.append("text")
+                        .attr("transform", "rotate(-90)")
+                        .attr("x", 0 - (height / 2))
+                        .attr("y", 0 - margin.left)
+                        .attr("dy", "1em")
+                        .style("text-anchor", "middle")
+                        .text("Broj Nezaposlenih")
+
+                    svg.append("text")
+                        .attr("x", (width / 2))
+                        .attr("y", (height + (margin.bottom / 2)))
+                        .attr("dy", "1em")
+                        .style("text-anchor", "middle")
+                        .text("Godina");
+
+                    svg.append("text")
+                        .attr("x", (width / 2))
+                        .attr("y", (margin.top / 2) - 40)
+                        .style("text-anchor", "middle")
+                        .style("font-size", "1em")
+                        .text("Prikaz broja nezaposlenih po godinama");
+
+                    var barchart = svg.selectAll("rect")
+                        .data(element.BrojNezaposlenih)
+                        .enter()
+                        .append("rect")
+                        .attr("x", function (d, i) { return x(i); })
+                        .attr("y", function (d, i) { return y(element.BrojNezaposlenih[i]); })
+                        .attr("height", function (d, i) { return height - y(element.BrojNezaposlenih[i]) })
+                        .attr("width", barWidth)
+                        .attr("fill", function (d, i) { return barColors(i); });
+
+                }
+
+            });
         }
     </script>
 

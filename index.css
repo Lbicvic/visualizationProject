@@ -1,0 +1,17 @@
+body{
+    display: flex;
+    justify-content: center;
+}
+#map{
+    flex-direction: column;
+}
+#bar-chart{
+    margin-top: 5%;
+}
+#imeZupanije, h3{
+    text-align: center;
+}
+#imeZupanije{
+    font-size: large;
+   
+}
