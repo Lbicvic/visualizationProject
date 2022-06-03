@@ -47,6 +47,7 @@
                     ],
                     "properties": {
                         "unemployed": 129064,
+                        "population":115862,
                         "adm1_code": "HRV-1490",
                         "OBJECTID_1": 2181,
                         "diss_me": 1490,
@@ -132,6 +133,7 @@
                     ],
                     "properties": {
                         "unemployed": 131201,
+                        "population":96624,
                         "adm1_code": "HRV-1491",
                         "OBJECTID_1": 2184,
                         "diss_me": 1491,
@@ -234,6 +236,7 @@
                     ],
                     "properties": {
                         "unemployed": 656917,
+                        "population":425412,
                         "adm1_code": "HRV-1492",
                         "OBJECTID_1": 2182,
                         "diss_me": 1492,
@@ -346,6 +349,7 @@
                     ],
                     "properties": {
                         "unemployed": 159007,
+                        "population": 160340,
                         "adm1_code": "HRV-1493",
                         "OBJECTID_1": 2186,
                         "diss_me": 1493,
@@ -421,6 +425,7 @@
                     ],
                     "properties": {
                         "unemployed": 98368,
+                        "population": 120942,
                         "adm1_code": "HRV-1582",
                         "OBJECTID_1": 2222,
                         "diss_me": 1582,
@@ -494,6 +499,7 @@
                     ],
                     "properties": {
                         "unemployed": 171338,
+                        "population":112596,
                         "adm1_code": "HRV-1583",
                         "OBJECTID_1": 2223,
                         "diss_me": 1583,
@@ -575,6 +581,7 @@
                     ],
                     "properties": {
                         "unemployed": 55332,
+                        "population":42893,
                         "adm1_code": "HRV-1584",
                         "OBJECTID_1": 2215,
                         "diss_me": 1584,
@@ -674,6 +681,7 @@
                     ],
                     "properties": {
                         "unemployed": 262925,
+                        "population":266503,
                         "adm1_code": "HRV-1586",
                         "OBJECTID_1": 2214,
                         "diss_me": 1586,
@@ -750,6 +758,7 @@
                     ],
                     "properties": {
                         "unemployed": 291774,
+                        "population":140549,
                         "adm1_code": "HRV-1587",
                         "OBJECTID_1": 2224,
                         "diss_me": 1587,
@@ -829,6 +838,7 @@
                     ],
                     "properties": {
                         "unemployed": 227571,
+                        "population": 301206,
                         "adm1_code": "HRV-1588",
                         "OBJECTID_1": 2225,
                         "diss_me": 1588,
@@ -901,6 +911,7 @@
                     ],
                     "properties": {
                         "unemployed": 597774,
+                        "population": 769944,
                         "adm1_code": "HRV-1589",
                         "OBJECTID_1": 2226,
                         "diss_me": 1589,
@@ -972,6 +983,7 @@
                     ],
                     "properties": {
                         "unemployed": 115088,
+                        "population": 195794,
                         "adm1_code": "HRV-1592",
                         "OBJECTID_1": 2227,
                         "diss_me": 1592,
@@ -1047,6 +1059,7 @@
                     ],
                     "properties": {
                         "unemployed": 236705,
+                        "population": 130782,
                         "adm1_code": "HRV-1602",
                         "OBJECTID_1": 2228,
                         "diss_me": 1602,
@@ -1122,6 +1135,7 @@
                     ],
                     "properties": {
                         "unemployed": 517992,
+                        "population": 259481,
                         "adm1_code": "HRV-1603",
                         "OBJECTID_1": 2229,
                         "diss_me": 1603,
@@ -1197,6 +1211,7 @@
                     ],
                     "properties": {
                         "unemployed": 236705,
+                        "population": 64420,
                         "adm1_code": "HRV-1604",
                         "OBJECTID_1": 2230,
                         "diss_me": 1604,
@@ -1205,7 +1220,7 @@
                         "wikipedia": null,
                         "iso_a2": "HR",
                         "adm0_sr": 1,
-                        "name": "Brodsko-Posavska",
+                        "name": "Požeško-Slavonska",
                         "name_alt": "Slavonski Brod-Posavina",
                         "name_local": null,
                         "type": "Å½upanija",
@@ -1270,6 +1285,7 @@
                     ],
                     "properties": {
                         "unemployed": 287277,
+                        "population": 144438,
                         "adm1_code": "HRV-1605",
                         "OBJECTID_1": 2231,
                         "diss_me": 1605,
@@ -1345,6 +1361,7 @@
                     ],
                     "properties": {
                         "unemployed": 149372,
+                        "population": 70660,
                         "adm1_code": "HRV-1606",
                         "OBJECTID_1": 2232,
                         "diss_me": 1606,
@@ -1420,6 +1437,7 @@
                     ],
                     "properties": {
                         "unemployed": 179835,
+                        "population": 102295,
                         "adm1_code": "HRV-1607",
                         "OBJECTID_1": 2233,
                         "diss_me": 1607,
@@ -1496,6 +1514,7 @@
                     ],
                     "properties": {
                         "unemployed": 107807,
+                        "population":101661,
                         "adm1_code": "HRV-1608",
                         "OBJECTID_1": 2234,
                         "diss_me": 1608,
@@ -1569,6 +1588,7 @@
                     ],
                     "properties": {
                         "unemployed": 99460,
+                        "population": 105863,
                         "adm1_code": "HRV-1609",
                         "OBJECTID_1": 2235,
                         "diss_me": 1609,
@@ -1644,6 +1664,7 @@
                     ],
                     "properties": {
                         "unemployed": 133929,
+                        "population": 160264,
                         "adm1_code": "HRV-1610",
                         "OBJECTID_1": 2236,
                         "diss_me": 1610,

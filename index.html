@@ -30,13 +30,14 @@
     </div>
     <div id="bar-chart">
         <p id="imeZupanije"></p>
+        <p id="brojStanovnikaZupanije"></p>
     </div>
     <script src="data.js"></script>
     <script>
         var width = 960;
         var height = 700;
         var skala = d3.scale.linear()
-            .domain([55000, 660000])
+            .domain([42000, 770000])
             .range([0, 6]);
             
         var colors = ["#ffbaba", "#ff7b7b", "#ff5252", "#ff0000", "#cc0600", "#7C0A02", "#3D0501"];
@@ -72,22 +73,22 @@
         }
 
         mapLegend.append("text")
-            .attr("x", 310)
+            .attr("x", 265)
             .attr("y", 675)
-            .text(`Manji broj`).style("font-size", 18);
+            .text(`Manje od`).style("font-size", 18);
         mapLegend.append("text")
-            .attr("x", 310)
+            .attr("x", 265)
             .attr("y", 693)
-            .text(`nezaposlenih`).style("font-size", 18);
+            .text(`105000 stanovnika`).style("font-size", 18);
 
         mapLegend.append("text")
-            .attr("x", 610)
+            .attr("x", 605)
             .attr("y", 675)
-            .text(`Veći broj`).style("font-size", 18);
+            .text(`Veće od`).style("font-size", 18);
         mapLegend.append("text")
-            .attr("x", 610)
+            .attr("x", 605)
             .attr("y", 693)
-            .text(`nezaposlenih`).style("font-size", 18);
+            .text(`750000 stanovnika`).style("font-size", 18);
 
         d3.json("cro_regv3.json", function (error, cro) {
             var data = topojson.feature(cro, cro.objects.layer1);
@@ -99,7 +100,7 @@
                 .attr("id", function (d) { return d.id; })
                 .attr("d", path)
                 .style("fill", function (d) {
-                    var value = Math.round(skala(d.properties.unemployed));
+                    var value = Math.round(skala(d.properties.population));
                     return colors[value];
                 })
                 .style("stroke", "black")
@@ -107,6 +108,7 @@
                 .style("stroke-opacity", 1)
                 .on("click", function (d, i) {
                     d3.select("#imeZupanije").html(d.properties.name)
+                    d3.select("#brojStanovnikaZupanije").html(`Broj stanovnika: ${d.properties.population}`)
                     addBarChart(d.properties.name)
                 })
         });;
